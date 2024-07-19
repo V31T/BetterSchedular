@@ -1,9 +1,15 @@
-package com.betterschedular;
+package com.betterschedular.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Course {
 
+    @Id //uid will be the primary key in the table
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer Uid;
+
     String semesterName;
-    Integer uuid;
     String code;
     String section;
     Integer classNumber;
@@ -19,9 +25,8 @@ public class Course {
     String dates;
     Integer seats;
 
-    public Course(String semesterName, Integer uuid, String code, String section, Integer classNumber, String modality, String title, String ge, Float units, String type, String days, String times, String instructor, String location, String dates, Integer seats) {
+    public Course(String semesterName, String code, String section, Integer classNumber, String modality, String title, String ge, Float units, String type, String days, String times, String instructor, String location, String dates, Integer seats) {
         this.semesterName = semesterName;
-        this.uuid = uuid;
         this.code = code;
         this.section = section;
         this.classNumber = classNumber;
@@ -38,11 +43,15 @@ public class Course {
         this.seats = seats;
     }
 
+    //no arg constructor for jpa
+    public Course() {
+
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "semesterName='" + semesterName + '\'' +
-                ", uuid=" + uuid +
                 ", code='" + code + '\'' +
                 ", section='" + section + '\'' +
                 ", classNumber=" + classNumber +
@@ -60,20 +69,16 @@ public class Course {
                 '}';
     }
 
+    public Integer getUid() {
+        return Uid;
+    }
+
     public String getSemesterName() {
         return semesterName;
     }
 
     public void setSemesterName(String semesterName) {
         this.semesterName = semesterName;
-    }
-
-    public Integer getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(Integer uuid) {
-        this.uuid = uuid;
     }
 
     public String getCode() {

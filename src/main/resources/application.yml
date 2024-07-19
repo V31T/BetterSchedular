@@ -1,3 +1,21 @@
 spring:
     application:
         name: BetterSchedular
+    datasource:
+        # this is the same as the docker file, we are using port 5332 instead of 5432
+        url: jdbc:postgresql://localhost:5332/courses
+        username: henrypham
+        password: postgres
+    jpa:
+        hibernate:
+            ddl-auto: create-drop #basically makes table and then drops it when app stops running
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: true
+        show-sql: true
+    main:
+        web-application-type: servlet #use this to turn on or off the back-end server (servelt is default)
+
+server:
+    port: 3000 #changes port to 3000 instead of 8080
