@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Scraper {
 
@@ -42,7 +43,7 @@ public class Scraper {
                     .connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36")
                     //comment and uncomment out as needed. commented = only 1/8th of html file downloaded. change to config later on
-                    .maxBodySize(0)
+//                    .maxBodySize(0)
                     .get();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -56,14 +57,19 @@ public class Scraper {
                 td.add(cell.text().trim());
             }
 //            System.out.println(td.toString());
-            courses.add(parseCourse(td));
+            Course course = parseCourse(td);
+            if (course != null) {
+                courses.add(course);
+            }
         }
+
         return courses;
     }
 
     private Course parseCourse(ArrayList<String> td) {
-        //semesterName = global var semesterName
-        //adds 1 -4 (depending on the Unique set) and then converts it to Integer
+        if (td.size() < 13 ) {
+            return null;
+        }
         String[] codeAndSection = splitCodeAndSection(td.get(0));
         String code = codeAndSection[0];
         String section = codeAndSection[1];
@@ -91,6 +97,10 @@ public class Scraper {
         String code = split.substring(0, index);
         String section = split.substring(index + 1);
         return new String[] { code, section };
+    }
+
+    public List<Course> getAllCourses(){
+        return this.courses;
     }
 
 }
