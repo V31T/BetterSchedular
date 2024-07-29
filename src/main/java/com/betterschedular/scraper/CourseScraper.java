@@ -1,4 +1,4 @@
-package com.betterschedular.service;
+package com.betterschedular.scraper;
 
 //could just import org.jsoup.* but we only need these 5 libraries
 import com.betterschedular.model.Course;
@@ -10,20 +10,19 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class Scraper {
+public class CourseScraper {
 
     public static List<Course> getFall2024Courses(){
-        Scraper fall2024Scraper = new Scraper("https://www.sjsu.edu/classes/schedules/fall-2024.php");
-        return fall2024Scraper.getCourses();
+        CourseScraper fall2024CourseScraper = new CourseScraper("https://www.sjsu.edu/classes/schedules/fall-2024.php");
+        return fall2024CourseScraper.getCourses();
     }
 
     private String url;
     String semesterName;
     List<Course> courses = new ArrayList<>();
 
-    private Scraper(String url) {
+    private CourseScraper(String url) {
         //set url name
         this.url = url;
         //set semester name based on url provided

@@ -3,27 +3,41 @@ package com.betterschedular.model;
 import jakarta.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Course.getCourseByCode",
+                query = "SELECT c FROM Course c WHERE c.code = ?1"
+        ),
+        @NamedQuery(name = "Course.getCourseByGE",
+                query = "SELECT c FROM Course c WHERE c.ge = ?1"
+        ),
+        @NamedQuery(name = "Course.getCourseCodes",
+                query = "SELECT c.code FROM Course c"
+        ),
+        @NamedQuery(name = "Course.getSemesters",
+                query = "SELECT DISTINCT c.semesterName FROM Course c"
+        )
+})
 public class Course {
 
     @Id //uid will be the primary key in the table
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Uid;
+    private Integer Uid; //3
 
-    String semesterName;
-    String code;
-    String section;
-    Integer classNumber;
-    String modality;
-    String title;
-    String ge;
-    Float units;
-    String type;
-    String days;
-    String times;
-    String  Instructor;
-    String location;
-    String dates;
-    Integer seats;
+    String semesterName; //Fall 2024
+    String code; // AAS 1
+    String section; // 03
+    Integer classNumber; // 47609
+    String modality; // In Person
+    String title; // Intro to Asian American Studies
+    String ge; // F
+    Float units; // 3.00
+    String type; //LEC
+    String days; // MW
+    String times; // 03:00PM-04:15PM
+    String Instructor; // Joanne Rondilla
+    String location; // CL234
+    String dates; // 08/21/24 -12/09/24
+    Integer seats; // 30
 
     public Course(String semesterName, String code, String section, Integer classNumber, String modality, String title, String ge, Float units, String type, String days, String times, String instructor, String location, String dates, Integer seats) {
         this.semesterName = semesterName;
@@ -97,6 +111,7 @@ public class Course {
         this.section = section;
     }
 
+    @Column(unique=true, nullable=false)
     public Integer getClassNumber() {
         return classNumber;
     }
